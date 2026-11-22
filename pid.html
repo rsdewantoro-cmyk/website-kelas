@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Simulator PID</title>
+<meta name="description" content="Simulator interaktif kontrol P, PI, dan PID pada tangki pemanas air untuk Kontrol Proses kelas XI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #edf2f0; --surface: #ffffff; --ink: #13303a; --muted: #4f6870; --rule: #c9d5d2;
+    --water: #138a9e; --water-soft: #d4ebee; --signal: #d9700d; --signal-soft: #fbe5cf; --heat: #c2410c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0f1d22; --surface: #16272d; --ink: #e4eeec; --muted: #93aab0; --rule: #2a4048;
+      --water: #4cc3d6; --water-soft: #173a42; --signal: #f4a24e; --signal-soft: #3a2a18; --heat: #fb8a5c;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0f1d22; --surface: #16272d; --ink: #e4eeec; --muted: #93aab0; --rule: #2a4048;
+    --water: #4cc3d6; --water-soft: #173a42; --signal: #f4a24e; --signal-soft: #3a2a18; --heat: #fb8a5c;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font-family: "Atkinson Hyperlegible", system-ui, sans-serif; font-size: 1.05rem; line-height: 1.6; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  h1, h2, h3 { font-family: "Archivo", system-ui, sans-serif; margin: 0; }
+
+  .topbar { border-bottom: 1px solid var(--rule); }
+  .topbar .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; padding-top: 14px; padding-bottom: 14px; }
+  .brand { font-family: "Archivo", sans-serif; font-weight: 800; font-stretch: 110%; text-decoration: none; }
+  .back { color: var(--muted); text-decoration: none; font-size: .95rem; }
+  .back:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  header.page { padding: 40px 0 8px; }
+  .crumb { color: var(--signal); font-weight: 700; margin: 0 0 6px; }
+  h1 { font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 800; font-stretch: 115%; line-height: 1.05; letter-spacing: -0.01em; }
+  .lead { color: var(--muted); max-width: 62ch; margin: 14px 0 0; }
+
+  .lab { display: grid; grid-template-columns: 300px 1fr; gap: 20px; margin-top: 28px; align-items: start; }
+  .panel { background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; padding: 20px; }
+  .panel h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+  .panel .hint { color: var(--muted); font-size: .9rem; margin: 0 0 16px; }
+
+  .presets { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+  .presets button {
+    font: inherit; font-size: .9rem; font-weight: 700; cursor: pointer; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--rule); border-radius: 999px; padding: 4px 12px;
+  }
+  .presets button:hover { border-color: var(--signal); }
+  .presets button[aria-pressed="true"] { background: var(--signal); border-color: var(--signal); color: var(--surface); }
+
+  .knob { margin-bottom: 18px; }
+  .knob-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .knob label { font-weight: 700; }
+  .knob label small { font-weight: 400; color: var(--muted); }
+  .knob output { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.15rem; font-variant-numeric: tabular-nums; color: var(--signal); }
+  input[type=range] { width: 100%; accent-color: var(--signal); margin: 6px 0 0; }
+  .knob .what { font-size: .85rem; color: var(--muted); margin: 2px 0 0; }
+
+  .toggle { display: flex; gap: 10px; align-items: flex-start; padding-top: 14px; border-top: 1px solid var(--rule); font-size: .95rem; }
+  .toggle input { width: 18px; height: 18px; margin-top: 4px; accent-color: var(--water); flex: none; }
+  .toggle span small { display: block; color: var(--muted); font-size: .85rem; }
+
+  .chart-panel { padding: 16px 16px 12px; }
+  .chart-box { position: relative; height: 380px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 20px; font-size: .9rem; color: var(--muted); margin: 0 4px 10px; }
+  .legend i { display: inline-block; width: 22px; height: 0; vertical-align: middle; margin-right: 6px; }
+  .l-pv { border-top: 3px solid var(--water); }
+  .l-sp { border-top: 2px dashed var(--ink); }
+  .l-mv { border-top: 2px solid var(--heat); opacity: .7; }
+
+  .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+  .metric { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 12px 14px; }
+  .metric .v { font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.5rem; font-variant-numeric: tabular-nums; line-height: 1.2; }
+  .metric .k { font-size: .88rem; color: var(--muted); }
+  .metric.good .v { color: var(--water); }
+  .metric.bad .v { color: var(--heat); }
+
+  section.learn { padding: 48px 0; }
+  section.learn h2 { font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 800; font-stretch: 112%; margin-bottom: 16px; }
+  .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .mode { border-top: 4px solid var(--signal); padding-top: 12px; }
+  .mode h3 { font-size: 1.1rem; margin-bottom: 4px; }
+  .mode p { margin: 0; color: var(--muted); font-size: .97rem; }
+  ol.tasks { padding-left: 1.3rem; max-width: 70ch; }
+  ol.tasks li { margin-bottom: 10px; }
+  ol.tasks b { color: var(--signal); }
+
+  footer { padding: 32px 0 56px; color: var(--muted); font-size: .9rem; border-top: 1px solid var(--rule); }
+
+  @media (max-width: 860px) {
+    .lab { grid-template-columns: 1fr; }
+    .chart-box { height: 300px; }
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .modes { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="index.html">Ruang Kelas TKI</a>
+    <a class="back" href="index.html#kontrol-4">Kembali ke Kontrol Proses</a>
+  </div>
+</div>
+
+<header class="page">
+  <div class="wrap">
+    <p class="crumb">Kontrol Proses kelas XI, topik 4</p>
+    <h1>Simulator kontrol PID</h1>
+    <p class="lead">Sebuah tangki berisi air bersuhu 30 °C. Pada detik ke-10, set point dinaikkan menjadi 60 °C. Pengendali suhu (TIC) mengatur daya pemanas dari 0 sampai 100% supaya suhu air mencapai set point. Geser nilai Kp, Ki, dan Kd, lalu amati bagaimana grafik berubah.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="lab">
+    <div class="panel">
+      <h2>Pengaturan pengendali</h2>
+      <p class="hint">Pilih mode cepat, atau geser sendiri.</p>
+      <div class="presets" role="group" aria-label="Mode cepat">
+        <button type="button" data-p="2" data-i="0" data-d="0">P saja</button>
+        <button type="button" data-p="2" data-i="0.05" data-d="0">PI</button>
+        <button type="button" data-p="3" data-i="0.06" data-d="12">PID</button>
+        <button type="button" data-p="9" data-i="0.25" data-d="0">Terlalu agresif</button>
+      </div>
+
+      <div class="knob">
+        <div class="knob-head"><label for="kp">Kp <small>proporsional</small></label><output id="kp-out" for="kp"></output></div>
+        <input id="kp" type="range" min="0" max="10" step="0.1" value="2">
+        <p class="what">Seberapa kuat pengendali bereaksi terhadap error saat ini.</p>
+      </div>
+      <div class="knob">
+        <div class="knob-head"><label for="ki">Ki <small>integral</small></label><output id="ki-out" for="ki"></output></div>
+        <input id="ki" type="range" min="0" max="0.3" step="0.005" value="0.05">
+        <p class="what">Menjumlahkan error dari waktu ke waktu untuk menghapus offset.</p>
+      </div>
+      <div class="knob">
+        <div class="knob-head"><label for="kd">Kd <small>derivatif</small></label><output id="kd-out" for="kd"></output></div>
+        <input id="kd" type="range" min="0" max="30" step="0.5" value="0">
+        <p class="what">Meredam laju perubahan suhu supaya tidak melewati set point.</p>
+      </div>
+
+      <label class="toggle">
+        <input id="dist" type="checkbox">
+        <span>Tambahkan gangguan pada detik ke-150<small>Air dingin masuk ke tangki. Amati apakah pengendali bisa memulihkan suhu.</small></span>
+      </label>
+    </div>
+
+    <div>
+      <div class="panel chart-panel">
+        <div class="legend">
+          <span><i class="l-pv"></i>Suhu air, PV (°C)</span>
+          <span><i class="l-sp"></i>Set point, SP (°C)</span>
+          <span><i class="l-mv"></i>Daya pemanas, MV (%)</span>
+        </div>
+        <div class="chart-box"><canvas id="chart" aria-label="Grafik respon suhu terhadap waktu" role="img"></canvas></div>
+      </div>
+      <div class="metrics" aria-live="polite">
+        <div class="metric" id="m-os"><div class="v">–</div><div class="k">Overshoot</div></div>
+        <div class="metric" id="m-off"><div class="v">–</div><div class="k">Selisih dari SP di detik 145</div></div>
+        <div class="metric" id="m-ts"><div class="v">–</div><div class="k">Waktu tunak (±1,5 °C)</div></div>
+        <div class="metric" id="m-rec"><div class="v">–</div><div class="k">Penurunan saat gangguan</div></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="learn">
+    <h2>Tiga aksi dalam PID</h2>
+    <div class="modes">
+      <div class="mode"><h3>P, proporsional</h3><p>Output sebanding dengan error. Kp besar membuat respon cepat, tetapi kontrol P saja selalu menyisakan offset dan bisa berosilasi.</p></div>
+      <div class="mode"><h3>I, integral</h3><p>Output bertambah selama masih ada error, sehingga offset hilang. Ki terlalu besar membuat suhu melewati set point dan berayun.</p></div>
+      <div class="mode"><h3>D, derivatif</h3><p>Output melawan perubahan yang terlalu cepat, seperti rem. Kd membantu mengurangi overshoot, tetapi peka terhadap noise sensor.</p></div>
+    </div>
+
+    <h2 style="margin-top:40px">Coba dan catat</h2>
+    <ol class="tasks">
+      <li>Pilih <b>P saja</b>. Berapa offset-nya? Naikkan Kp ke 5, lalu ke 8. Apa yang terjadi pada offset dan bentuk grafik?</li>
+      <li>Pilih <b>PI</b>. Apakah offset hilang? Bandingkan overshoot saat Ki = 0,02, Ki = 0,05, dan Ki = 0,15.</li>
+      <li>Pilih <b>PID</b>, lalu ubah Kd dari 0 ke 20. Bagaimana pengaruhnya terhadap overshoot dan waktu tunak?</li>
+      <li>Nyalakan <b>gangguan</b>. Bandingkan mode P saja dan PI: mode mana yang mengembalikan suhu ke 60 °C?</li>
+      <li>Pilih <b>Terlalu agresif</b>. Jelaskan mengapa daya pemanas (MV) melonjak ke 0% dan 100% berulang kali.</li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Model proses: orde satu dengan waktu mati, K = 0,8 °C/%, τ = 50 s, θ = 15 s. Grafik dibuat dengan Chart.js (lisensi MIT).</div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+(function () {
+  // Model tangki pemanas: tau*dT/dt = -(T - Tamb) + K*u(t - theta)
+  var K = 0.8, TAU = 50, THETA = 15, T0 = 30, SP_LOW = 30, SP_HIGH = 60;
+  var STEP_AT = 10, DIST_AT = 150, DIST_DROP = 12, T_END = 300, DT = 0.1;
+
+  function simulate(kp, ki, kd, dist) {
+    var n = Math.round(T_END / DT), delay = Math.round(THETA / DT);
+    var T = T0, integ = 0, prevPv = T0, uHist = [];
+    for (var j = 0; j < delay; j++) uHist.push(0);
+    var t = [], pv = [], sp = [], mv = [];
+    for (var i = 0; i <= n; i++) {
+      var time = i * DT;
+      var spv = time >= STEP_AT ? SP_HIGH : SP_LOW;
+      var e = spv - T;
+      var dPv = (T - prevPv) / DT;
+      var uUnsat = kp * e + ki * integ - kd * dPv;
+      var u = Math.min(100, Math.max(0, uUnsat));
+      // anti-windup: integrasi hanya jika output tidak jenuh ke arah error
+      if (!((uUnsat > 100 && e > 0) || (uUnsat < 0 && e < 0))) integ += e * DT;
+      prevPv = T;
+      uHist.push(u);
+      var uDelayed = uHist.shift();
+      var tamb = (dist && time >= DIST_AT) ? T0 - DIST_DROP : T0;
+      T += DT * (-(T - tamb) + K * uDelayed) / TAU;
+      if (i % 5 === 0) { t.push(+time.toFixed(1)); pv.push(+T.toFixed(2)); sp.push(spv); mv.push(+u.toFixed(1)); }
+    }
+    return { t: t, pv: pv, sp: sp, mv: mv };
+  }
+
+  function metrics(r, dist) {
+    var stepSize = SP_HIGH - SP_LOW, maxPv = -Infinity, tsIdx = -1, offAt = null, minAfter = Infinity, preDist = null;
+    for (var i = 0; i < r.t.length; i++) {
+      var time = r.t[i];
+      if (time >= STEP_AT && time < DIST_AT) {
+        if (r.pv[i] > maxPv) maxPv = r.pv[i];
+        if (Math.abs(r.pv[i] - SP_HIGH) > 1.5) tsIdx = i;
+      }
+      if (offAt === null && time >= 145) offAt = r.pv[i];
+      if (preDist === null && time >= DIST_AT) preDist = r.pv[i];
+      if (time >= DIST_AT) minAfter = Math.min(minAfter, r.pv[i]);
+    }
+    var os = Math.max(0, (maxPv - SP_HIGH) / stepSize * 100);
+    var settled = tsIdx >= 0 && tsIdx + 1 < r.t.length && r.t[tsIdx + 1] < DIST_AT;
+    return {
+      os: os,
+      off: SP_HIGH - offAt,
+      ts: settled ? r.t[tsIdx + 1] - STEP_AT : null,
+      drop: dist ? preDist - minAfter : null
+    };
+  }
+
+  function css(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+  function fmt(x, d) { return x.toFixed(d).replace('.', ','); }
+
+  var kp = document.getElementById('kp'), ki = document.getElementById('ki'), kd = document.getElementById('kd'), dist = document.getElementById('dist');
+  var presetBtns = document.querySelectorAll('.presets button');
+  var chart = null;
+
+  function setMetric(id, text, state) {
+    var el = document.getElementById(id);
+    el.querySelector('.v').textContent = text;
+    el.classList.remove('good', 'bad');
+    if (state) el.classList.add(state);
+  }
+
+  function update() {
+    var p = +kp.value, i = +ki.value, d = +kd.value, ds = dist.checked;
+    document.getElementById('kp-out').textContent = fmt(p, 1);
+    document.getElementById('ki-out').textContent = fmt(i, 3);
+    document.getElementById('kd-out').textContent = fmt(d, 1);
+    presetBtns.forEach(function (b) {
+      var on = +b.dataset.p === p && +b.dataset.i === i && +b.dataset.d === d;
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+
+    var r = simulate(p, i, d, ds), m = metrics(r, ds);
+    setMetric('m-os', fmt(m.os, 1) + '%', m.os > 20 ? 'bad' : (m.os < 5 ? 'good' : null));
+    setMetric('m-off', fmt(Math.abs(m.off), 1) + ' °C', Math.abs(m.off) < 0.5 ? 'good' : 'bad');
+    setMetric('m-ts', m.ts === null ? 'Tidak tunak' : fmt(m.ts, 0) + ' s', m.ts === null ? 'bad' : null);
+    setMetric('m-rec', m.drop === null ? 'Mati' : fmt(m.drop, 1) + ' °C', null);
+
+    if (!window.Chart) return;
+    if (!chart) {
+      chart = new Chart(document.getElementById('chart'), {
+        type: 'line',
+        data: { labels: r.t, datasets: [
+          { label: 'PV', data: r.pv, borderColor: css('--water'), borderWidth: 3, pointRadius: 0, yAxisID: 'y', tension: 0 },
+          { label: 'SP', data: r.sp, borderColor: css('--ink'), borderWidth: 2, borderDash: [6, 5], pointRadius: 0, yAxisID: 'y', stepped: true },
+          { label: 'MV', data: r.mv, borderColor: css('--heat'), borderWidth: 1.5, pointRadius: 0, yAxisID: 'y2', tension: 0, borderJoinStyle: 'round' }
+        ]},
+        options: {
+          animation: false, maintainAspectRatio: false, interaction: { mode: 'index', intersect: false },
+          plugins: {
+            legend: { display: false },
+            tooltip: { callbacks: {
+              title: function (items) { return 'Detik ke-' + items[0].label; },
+              label: function (c) { return c.dataset.label + ': ' + c.formattedValue + (c.dataset.label === 'MV' ? '%' : ' °C'); }
+            } }
+          },
+          scales: {
+            x: { type: 'linear', min: 0, max: T_END, title: { display: true, text: 'Waktu (detik)', color: css('--muted') }, ticks: { color: css('--muted'), stepSize: 30 }, grid: { color: css('--rule') } },
+            y: { min: 15, max: 85, title: { display: true, text: 'Suhu (°C)', color: css('--muted') }, ticks: { color: css('--muted') }, grid: { color: css('--rule') } },
+            y2: { position: 'right', min: 0, max: 100, title: { display: true, text: 'Pemanas (%)', color: css('--muted') }, ticks: { color: css('--muted') }, grid: { display: false } }
+          }
+        }
+      });
+      chart.data.datasets.forEach(function (ds, k) { ds.data = [r.pv, r.sp, r.mv][k].map(function (v, idx) { return { x: r.t[idx], y: v }; }); });
+      chart.update();
+    } else {
+      chart.data.datasets.forEach(function (ds, k) { ds.data = [r.pv, r.sp, r.mv][k].map(function (v, idx) { return { x: r.t[idx], y: v }; }); });
+      chart.update();
+    }
+  }
+
+  [kp, ki, kd].forEach(function (el) { el.addEventListener('input', update); });
+  dist.addEventListener('change', update);
+  presetBtns.forEach(function (b) {
+    b.addEventListener('click', function () { kp.value = b.dataset.p; ki.value = b.dataset.i; kd.value = b.dataset.d; update(); });
+  });
+  update();
+  window.__pid = { simulate: simulate, metrics: metrics };
+})();
+</script>
+</body>
+</html>
