@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kelas Teknik Kimia Industri</title>
+<meta name="description" content="Materi, tugas, dan pengumuman untuk Pengolahan Limbah (XII) dan Kontrol Proses (XI).">
+<style>
+  :root {
+    --bg: #f6f7f4;
+    --surface: #ffffff;
+    --text: #1d2420;
+    --muted: #5a6560;
+    --line: #dde2dc;
+    --limbah: #2f7a4f;
+    --limbah-soft: #e5f2ea;
+    --kontrol: #2b5f9e;
+    --kontrol-soft: #e4edf8;
+    --accent: #b8621b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #141816;
+      --surface: #1d2320;
+      --text: #e7ece9;
+      --muted: #9aa6a0;
+      --line: #2f3833;
+      --limbah: #6cc495;
+      --limbah-soft: #1f3328;
+      --kontrol: #7fb0ea;
+      --kontrol-soft: #1d2a3b;
+      --accent: #e3a061;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+  a { color: inherit; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+
+  header { padding: 48px 0 32px; border-bottom: 1px solid var(--line); }
+  header .tag { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
+  header h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; margin: 8px 0 12px; }
+  header p.lead { color: var(--muted); max-width: 60ch; margin: 0; }
+  nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  nav a {
+    text-decoration: none; padding: 8px 14px; border-radius: 999px;
+    border: 1px solid var(--line); background: var(--surface); font-size: .95rem;
+  }
+  nav a:hover { border-color: var(--muted); }
+
+  section { padding: 40px 0; border-bottom: 1px solid var(--line); }
+  h2 { font-size: 1.5rem; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+
+  .notice {
+    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+    border-radius: 8px; padding: 14px 16px; margin-bottom: 12px;
+  }
+  .notice .date { font-size: .85rem; color: var(--muted); }
+  .notice p { margin: 4px 0 0; }
+
+  .subject h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .badge { font-size: .8rem; font-weight: 600; padding: 2px 10px; border-radius: 999px; }
+  .limbah .badge { background: var(--limbah-soft); color: var(--limbah); }
+  .kontrol .badge { background: var(--kontrol-soft); color: var(--kontrol); }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px;
+    border-top: 4px solid var(--c);
+  }
+  .limbah .card { --c: var(--limbah); }
+  .kontrol .card { --c: var(--kontrol); }
+  .card .no { font-size: .8rem; color: var(--muted); }
+  .card h3 { font-size: 1.05rem; margin: 2px 0 6px; }
+  .card p { margin: 0 0 10px; color: var(--muted); font-size: .95rem; }
+  .card .links { display: flex; flex-wrap: wrap; gap: 6px; }
+  .card .links a, .card .links span {
+    font-size: .85rem; text-decoration: none; padding: 3px 10px; border-radius: 6px;
+    background: var(--bg); border: 1px solid var(--line);
+  }
+  .card .links span { color: var(--muted); }
+
+  table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: .95rem; vertical-align: top; }
+  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+  tr:last-child td { border-bottom: 0; }
+  .table-wrap { overflow-x: auto; }
+
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: .9rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="tag">SMK · Teknik Kimia Industri</p>
+    <h1>Ruang Kelas Online</h1>
+    <p class="lead">Materi, tugas, dan pengumuman untuk mata pelajaran Pengolahan Limbah (kelas XII) dan Kontrol Proses (kelas XI). Simpan alamat halaman ini dan buka secara berkala.</p>
+    <nav>
+      <a href="#pengumuman">Pengumuman</a>
+      <a href="#limbah">Pengolahan Limbah · XII</a>
+      <a href="#kontrol">Kontrol Proses · XI</a>
+      <a href="#tugas">Tugas</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="pengumuman">
+    <div class="wrap">
+      <h2>Pengumuman</h2>
+      <p class="sub">Informasi terbaru untuk kelas.</p>
+      <div class="notice">
+        <div class="date">22 November 2026</div>
+        <p>Selamat datang di ruang kelas online. Materi dan tugas akan diunggah di halaman ini.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="limbah" class="subject limbah">
+    <div class="wrap">
+      <h2>Pengolahan Limbah <span class="badge">Kelas XII</span></h2>
+      <p class="sub">Karakteristik limbah industri dan cara pengolahannya.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="no">Topik 1</div>
+          <h3>Karakteristik Limbah Industri</h3>
+          <p>Jenis limbah (cair, padat, gas), parameter BOD, COD, TSS, pH, dan baku mutu.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+        <article class="card">
+          <div class="no">Topik 2</div>
+          <h3>Pengolahan Secara Fisika</h3>
+          <p>Penyaringan, sedimentasi, flotasi, dan filtrasi.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+        <article class="card">
+          <div class="no">Topik 3</div>
+          <h3>Pengolahan Secara Kimia</h3>
+          <p>Netralisasi, koagulasi–flokulasi, dan presipitasi.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+        <article class="card">
+          <div class="no">Topik 4</div>
+          <h3>Pengolahan Secara Biologi</h3>
+          <p>Lumpur aktif, kolam stabilisasi, serta proses aerob dan anaerob.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+        <article class="card">
+          <div class="no">Topik 5</div>
+          <h3>Limbah B3</h3>
+          <p>Identifikasi, penyimpanan, dan penanganan limbah bahan berbahaya dan beracun.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontrol" class="subject kontrol">
+    <div class="wrap">
+      <h2>Kontrol Proses <span class="badge">Kelas XI</span></h2>
+      <p class="sub">Dasar sistem pengendalian pada industri kimia.</p>
+      <div class="grid">
+        <article class="card">
+          <div class="no">Topik 1</div>
+          <h3>Konsep Sistem Kontrol</h3>
+          <p>Variabel proses, set point, serta sistem loop terbuka dan loop tertutup.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+        <article class="card">
+          <div class="no">Topik 2</div>
+          <h3>Sensor dan Transmitter</h3>
+          <p>Pengukuran suhu, tekanan, laju alir, dan level.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+        <article class="card">
+          <div class="no">Topik 3</div>
+          <h3>Elemen Kendali Akhir</h3>
+          <p>Control valve, aktuator, dan pompa.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+        <article class="card">
+          <div class="no">Topik 4</div>
+          <h3>Mode Kontrol P, PI, PID</h3>
+          <p>Aksi proporsional, integral, dan derivatif serta pengaruhnya terhadap respon.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+        <article class="card">
+          <div class="no">Topik 5</div>
+          <h3>Simbol dan Diagram P&amp;ID</h3>
+          <p>Membaca simbol instrumen dan diagram perpipaan.</p>
+          <div class="links"><span>Materi segera</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="tugas">
+    <div class="wrap">
+      <h2>Tugas</h2>
+      <p class="sub">Daftar tugas beserta batas waktunya.</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Kelas</th><th>Tugas</th><th>Batas waktu</th><th>Kumpulkan</th></tr></thead>
+          <tbody>
+            <tr><td>XII</td><td>Belum ada tugas</td><td>–</td><td>–</td></tr>
+            <tr><td>XI</td><td>Belum ada tugas</td><td>–</td><td>–</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Dibuat untuk pembelajaran Kurikulum Merdeka · Teknik Kimia Industri</div>
+</footer>
+
+</body>
+</html>
