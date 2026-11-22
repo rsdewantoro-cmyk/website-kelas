@@ -3,215 +3,379 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Kelas Teknik Kimia Industri</title>
-<meta name="description" content="Materi, tugas, dan pengumuman untuk Pengolahan Limbah (XII) dan Kontrol Proses (XI).">
+<title>Ruang Kelas TKI</title>
+<meta name="description" content="Materi, tugas, dan pengumuman Pengolahan Limbah kelas XII dan Kontrol Proses kelas XI.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f6f7f4;
+    --paper: #edf2f0;
     --surface: #ffffff;
-    --text: #1d2420;
-    --muted: #5a6560;
-    --line: #dde2dc;
-    --limbah: #2f7a4f;
-    --limbah-soft: #e5f2ea;
-    --kontrol: #2b5f9e;
-    --kontrol-soft: #e4edf8;
-    --accent: #b8621b;
+    --ink: #13303a;
+    --muted: #4f6870;
+    --rule: #c9d5d2;
+    --water: #138a9e;
+    --water-soft: #d4ebee;
+    --signal: #d9700d;
+    --signal-soft: #fbe5cf;
+    --sludge: #7d7350;
   }
   @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #141816;
-      --surface: #1d2320;
-      --text: #e7ece9;
-      --muted: #9aa6a0;
-      --line: #2f3833;
-      --limbah: #6cc495;
-      --limbah-soft: #1f3328;
-      --kontrol: #7fb0ea;
-      --kontrol-soft: #1d2a3b;
-      --accent: #e3a061;
+    :root:not([data-theme="light"]) {
+      --paper: #0f1d22;
+      --surface: #16272d;
+      --ink: #e4eeec;
+      --muted: #93aab0;
+      --rule: #2a4048;
+      --water: #4cc3d6;
+      --water-soft: #173a42;
+      --signal: #f4a24e;
+      --signal-soft: #3a2a18;
+      --sludge: #b8ab7d;
     }
   }
+  :root[data-theme="dark"] {
+    --paper: #0f1d22; --surface: #16272d; --ink: #e4eeec; --muted: #93aab0; --rule: #2a4048;
+    --water: #4cc3d6; --water-soft: #173a42; --signal: #f4a24e; --signal-soft: #3a2a18; --sludge: #b8ab7d;
+  }
+
   * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
   body {
     margin: 0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Atkinson Hyperlegible", system-ui, sans-serif;
+    font-size: 1.05rem;
     line-height: 1.6;
   }
   a { color: inherit; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 0 16px; }
+  :focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; border-radius: 4px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  h1, h2, h3 { font-family: "Archivo", system-ui, sans-serif; margin: 0; }
 
-  header { padding: 48px 0 32px; border-bottom: 1px solid var(--line); }
-  header .tag { font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0; }
-  header h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.15; margin: 8px 0 12px; }
-  header p.lead { color: var(--muted); max-width: 60ch; margin: 0; }
-  nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
-  nav a {
-    text-decoration: none; padding: 8px 14px; border-radius: 999px;
-    border: 1px solid var(--line); background: var(--surface); font-size: .95rem;
+  /* Bar atas */
+  .topbar { border-bottom: 1px solid var(--rule); }
+  .topbar .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; padding-top: 14px; padding-bottom: 14px; }
+  .brand { font-family: "Archivo", sans-serif; font-weight: 800; font-stretch: 110%; text-decoration: none; font-size: 1.05rem; }
+  .topbar nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+  .topbar nav a { text-decoration: none; color: var(--muted); font-size: .95rem; }
+  .topbar nav a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 4px; }
+
+  /* Pembuka */
+  .hero { padding: 48px 0 24px; }
+  .hero h1 {
+    font-size: clamp(2.3rem, 7vw, 4.6rem);
+    font-weight: 800;
+    font-stretch: 118%;
+    line-height: 1;
+    letter-spacing: -0.015em;
+    max-width: 14ch;
   }
-  nav a:hover { border-color: var(--muted); }
+  .hero .lead { margin: 18px 0 0; max-width: 52ch; color: var(--muted); font-size: 1.15rem; }
 
-  section { padding: 40px 0; border-bottom: 1px solid var(--line); }
-  h2 { font-size: 1.5rem; margin: 0 0 4px; }
-  .sub { color: var(--muted); margin: 0 0 20px; }
+  .diagram-frame { margin-top: 36px; background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; overflow-x: auto; }
+  .diagram-frame svg { display: block; width: 100%; min-width: 760px; height: auto; }
+  .diagram-caption { display: flex; flex-wrap: wrap; gap: 6px 24px; margin: 12px 2px 0; color: var(--muted); font-size: .92rem; }
+  .key { display: inline-flex; align-items: center; gap: 8px; }
+  .key i { display: inline-block; width: 28px; height: 0; border-top: 5px solid var(--water); border-radius: 3px; }
+  .key i.sig { border-top: 2px dashed var(--signal); }
 
-  .notice {
-    background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent);
-    border-radius: 8px; padding: 14px 16px; margin-bottom: 12px;
+  /* SVG */
+  .pipe { fill: none; stroke: var(--water); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+  .pipe.thin { stroke-width: 4; }
+  .pipe.sludge { stroke: var(--sludge); stroke-width: 5; }
+  .flow { fill: none; stroke: var(--surface); stroke-width: 2; stroke-dasharray: 6 18; stroke-linecap: round; opacity: .85; animation: flow 1.6s linear infinite; }
+  .signal { fill: none; stroke: var(--signal); stroke-width: 2; stroke-dasharray: 7 5; }
+  .vessel { fill: var(--surface); stroke: var(--ink); stroke-width: 2.5; }
+  .liquid { fill: var(--water-soft); }
+  .ink { stroke: var(--ink); stroke-width: 2.5; fill: none; }
+  .bubble-air { fill: none; stroke: var(--water); stroke-width: 1.8; }
+  .bubble-inst { fill: var(--surface); stroke: var(--signal); stroke-width: 2.5; }
+  .lbl { font-family: "Archivo", sans-serif; font-size: 15px; font-weight: 700; fill: var(--ink); }
+  .lbl-sm { font-family: "Atkinson Hyperlegible", sans-serif; font-size: 12.5px; fill: var(--muted); }
+  .tag { font-family: "Archivo", sans-serif; font-size: 12px; font-weight: 800; fill: var(--signal); }
+  .unit { cursor: pointer; }
+  .unit .vessel, .unit .lbl { transition: stroke .15s, fill .15s; }
+  .unit:hover .vessel, .unit:focus-visible .vessel { stroke: var(--water); stroke-width: 3.5; }
+  .unit:hover .lbl, .unit:focus-visible .lbl { fill: var(--water); }
+  .unit.loop:hover .bubble-inst, .unit.loop:focus-visible .bubble-inst { fill: var(--signal-soft); }
+  @keyframes flow { to { stroke-dashoffset: -24; } }
+  @media (prefers-reduced-motion: reduce) { .flow { animation: none; } html { scroll-behavior: auto; } }
+
+  /* Pengumuman */
+  section { padding: 56px 0; }
+  .section-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-bottom: 8px; }
+  h2 { font-size: clamp(1.7rem, 4vw, 2.4rem); font-weight: 800; font-stretch: 112%; line-height: 1.1; }
+  .grade { font-weight: 700; font-size: .95rem; padding: 3px 12px; border-radius: 999px; }
+  .intro { color: var(--muted); margin: 0 0 32px; max-width: 60ch; }
+
+  .notices { display: grid; gap: 10px; }
+  .notice { display: grid; grid-template-columns: 9.5rem 1fr; gap: 4px 20px; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: 16px 20px; }
+  .notice time { font-weight: 700; color: var(--signal); }
+  .notice p { margin: 0; }
+
+  /* Rangkaian topik */
+  .train { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; position: relative; }
+  .train::before { content: ""; position: absolute; top: 21px; left: 22px; right: 22px; height: 6px; border-radius: 3px; background: var(--water); }
+  .train.sig::before { height: 3px; top: 22px; background: repeating-linear-gradient(90deg, var(--signal) 0 10px, transparent 10px 17px); }
+  .train li { position: relative; scroll-margin-top: 24px; }
+  .node {
+    position: relative; z-index: 1; width: 48px; height: 48px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--surface); border: 4px solid var(--water);
+    font-family: "Archivo", sans-serif; font-weight: 800; font-size: 1.1rem; margin-bottom: 16px;
   }
-  .notice .date { font-size: .85rem; color: var(--muted); }
-  .notice p { margin: 4px 0 0; }
+  .train.sig .node { border-color: var(--signal); border-width: 3px; }
+  .train li:target .node { background: var(--water-soft); }
+  .train.sig li:target .node { background: var(--signal-soft); }
+  .train h3 { font-size: 1.15rem; font-weight: 700; font-stretch: 100%; line-height: 1.25; margin-bottom: 6px; }
+  .train p { margin: 0 0 12px; color: var(--muted); font-size: .97rem; }
+  .res { display: flex; flex-wrap: wrap; gap: 6px; }
+  .res a { font-weight: 700; color: var(--water); text-underline-offset: 3px; }
+  .train.sig .res a { color: var(--signal); }
+  .res .soon { font-size: .88rem; color: var(--muted); border: 1px dashed var(--rule); border-radius: 6px; padding: 1px 8px; }
 
-  .subject h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-  .badge { font-size: .8rem; font-weight: 600; padding: 2px 10px; border-radius: 999px; }
-  .limbah .badge { background: var(--limbah-soft); color: var(--limbah); }
-  .kontrol .badge { background: var(--kontrol-soft); color: var(--kontrol); }
+  #limbah .grade { background: var(--water-soft); color: var(--water); }
+  #kontrol .grade { background: var(--signal-soft); color: var(--signal); }
+  #kontrol { background: var(--surface); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  #kontrol .node { background: var(--surface); }
 
-  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
-  .card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px;
-    border-top: 4px solid var(--c);
+  /* Tugas */
+  .table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; }
+  table { width: 100%; border-collapse: collapse; min-width: 560px; }
+  th, td { text-align: left; padding: 14px 18px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-family: "Archivo", sans-serif; font-size: .9rem; color: var(--muted); font-weight: 700; }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.empty { color: var(--muted); }
+
+  footer { padding: 32px 0 56px; color: var(--muted); font-size: .92rem; border-top: 1px solid var(--rule); }
+
+  @media (max-width: 820px) {
+    .train { grid-template-columns: 1fr; gap: 28px; }
+    .train li { padding-left: 68px; min-height: 48px; }
+    .node { position: absolute; left: 0; top: -4px; margin: 0; }
+    .train::before { top: 0; bottom: 0; left: 21px; right: auto; width: 6px; height: auto; }
+    .train.sig::before { left: 22px; width: 3px; height: auto; background: repeating-linear-gradient(180deg, var(--signal) 0 10px, transparent 10px 17px); }
+    .notice { grid-template-columns: 1fr; }
   }
-  .limbah .card { --c: var(--limbah); }
-  .kontrol .card { --c: var(--kontrol); }
-  .card .no { font-size: .8rem; color: var(--muted); }
-  .card h3 { font-size: 1.05rem; margin: 2px 0 6px; }
-  .card p { margin: 0 0 10px; color: var(--muted); font-size: .95rem; }
-  .card .links { display: flex; flex-wrap: wrap; gap: 6px; }
-  .card .links a, .card .links span {
-    font-size: .85rem; text-decoration: none; padding: 3px 10px; border-radius: 6px;
-    background: var(--bg); border: 1px solid var(--line);
-  }
-  .card .links span { color: var(--muted); }
-
-  table { width: 100%; border-collapse: collapse; background: var(--surface); border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
-  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); font-size: .95rem; vertical-align: top; }
-  th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
-  tr:last-child td { border-bottom: 0; }
-  .table-wrap { overflow-x: auto; }
-
-  footer { padding: 32px 0 48px; color: var(--muted); font-size: .9rem; }
 </style>
 </head>
 <body>
 
-<header>
+<div class="topbar">
   <div class="wrap">
-    <p class="tag">SMK · Teknik Kimia Industri</p>
-    <h1>Ruang Kelas Online</h1>
-    <p class="lead">Materi, tugas, dan pengumuman untuk mata pelajaran Pengolahan Limbah (kelas XII) dan Kontrol Proses (kelas XI). Simpan alamat halaman ini dan buka secara berkala.</p>
-    <nav>
+    <a class="brand" href="#">Ruang Kelas TKI</a>
+    <nav aria-label="Navigasi">
       <a href="#pengumuman">Pengumuman</a>
-      <a href="#limbah">Pengolahan Limbah · XII</a>
-      <a href="#kontrol">Kontrol Proses · XI</a>
+      <a href="#limbah">Pengolahan Limbah</a>
+      <a href="#kontrol">Kontrol Proses</a>
       <a href="#tugas">Tugas</a>
     </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1>Ruang kelas Teknik Kimia Industri</h1>
+    <p class="lead">Materi, tugas, dan pengumuman untuk Pengolahan Limbah kelas XII dan Kontrol Proses kelas XI.</p>
+
+    <figure class="diagram-frame" style="margin-left:0;margin-right:0;margin-bottom:0">
+      <svg viewBox="0 0 1000 350" role="img" aria-labelledby="dg-title">
+        <title id="dg-title">Diagram instalasi pengolahan air limbah: saringan, koagulasi dengan loop kontrol pH, lumpur aktif, pengendapan, dan titik uji air olahan.</title>
+
+        <!-- Pipa utama -->
+        <path class="pipe" d="M20 210 H975"/>
+        <path class="flow" d="M20 210 H975"/>
+        <polygon points="990,210 972,200 972,220" fill="var(--water)"/>
+        <text class="lbl-sm" x="20" y="190">Air limbah</text>
+        <text class="lbl-sm" x="985" y="245" text-anchor="end">Air olahan</text>
+
+        <!-- Saringan -->
+        <a class="unit" href="#limbah-2" aria-label="Saringan: pengolahan fisika">
+          <rect class="vessel" x="95" y="160" width="100" height="90" rx="4"/>
+          <rect class="liquid" x="97" y="182" width="96" height="66"/>
+          <g class="ink" stroke-width="2">
+            <path d="M115 166 V244 M130 166 V244 M145 166 V244 M160 166 V244 M175 166 V244"/>
+          </g>
+          <text class="lbl" x="145" y="280" text-anchor="middle">Saringan</text>
+        </a>
+
+        <!-- Koagulasi + dosis -->
+        <a class="unit" href="#limbah-3" aria-label="Koagulasi: pengolahan kimia">
+          <rect class="vessel" x="250" y="150" width="120" height="100" rx="4"/>
+          <rect class="liquid" x="252" y="174" width="116" height="74"/>
+          <rect x="300" y="128" width="20" height="14" rx="2" fill="var(--ink)"/>
+          <path class="ink" d="M310 142 V226 M292 226 H328"/>
+          <text class="lbl" x="310" y="280" text-anchor="middle">Koagulasi</text>
+        </a>
+        <rect class="vessel" x="150" y="40" width="80" height="58" rx="4"/>
+        <rect class="liquid" x="152" y="62" width="76" height="34"/>
+        <text class="lbl-sm" x="190" y="56" text-anchor="middle">Koagulan</text>
+        <path class="pipe thin" d="M230 80 H350 V150"/>
+
+        <!-- Loop kontrol pH -->
+        <a class="unit loop" href="#kontrol" aria-label="Loop kontrol pH: materi Kontrol Proses">
+          <polygon points="278,70 278,90 302,70 302,90" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5" stroke-linejoin="round"/>
+          <path class="ink" d="M290 80 V58"/>
+          <path d="M278 58 A12 12 0 0 1 302 58 Z" fill="var(--surface)" stroke="var(--ink)" stroke-width="2.5"/>
+          <path class="signal" d="M290 46 V24 H430 V48"/>
+          <path class="signal" d="M430 92 V140"/>
+          <path class="ink" stroke-width="1.8" d="M430 184 V210"/>
+          <circle class="bubble-inst" cx="430" cy="70" r="22"/>
+          <text class="tag" x="430" y="74.5" text-anchor="middle">AIC</text>
+          <circle class="bubble-inst" cx="430" cy="162" r="22"/>
+          <text class="tag" x="430" y="166.5" text-anchor="middle">AT</text>
+          <text class="lbl-sm" x="462" y="74">Pengendali pH</text>
+          <text class="lbl-sm" x="462" y="40" fill="var(--signal)">Kontrol Proses</text>
+        </a>
+
+        <!-- Lumpur aktif -->
+        <a class="unit" href="#limbah-4" aria-label="Lumpur aktif: pengolahan biologi">
+          <rect class="vessel" x="480" y="150" width="150" height="100" rx="4"/>
+          <rect class="liquid" x="482" y="170" width="146" height="78"/>
+          <path class="ink" stroke-width="2" d="M494 240 H616"/>
+          <g class="bubble-air">
+            <circle cx="505" cy="226" r="4"/><circle cx="520" cy="205" r="5"/><circle cx="540" cy="228" r="3.5"/>
+            <circle cx="556" cy="190" r="4.5"/><circle cx="574" cy="218" r="5"/><circle cx="590" cy="196" r="3.5"/>
+            <circle cx="606" cy="226" r="4"/><circle cx="532" cy="184" r="3"/><circle cx="598" cy="180" r="3"/>
+          </g>
+          <text class="lbl" x="555" y="280" text-anchor="middle">Lumpur aktif</text>
+        </a>
+
+        <!-- Pengendapan -->
+        <path class="pipe sludge" d="M773 228 H850 V290"/>
+        <a class="unit" href="#limbah-2" aria-label="Pengendapan: pengolahan fisika">
+          <polygon class="vessel" points="680,150 800,150 800,212 755,250 725,250 680,212"/>
+          <polygon class="liquid" points="682,172 798,172 798,211 754,248 726,248 682,211"/>
+          <text class="lbl" x="740" y="280" text-anchor="middle">Pengendapan</text>
+        </a>
+
+        <!-- Lumpur ke penyimpanan B3 -->
+        <a class="unit" href="#limbah-5" aria-label="Penyimpanan lumpur: limbah B3">
+          <rect class="vessel" x="800" y="290" width="110" height="46" rx="4"/>
+          <text class="lbl" x="855" y="318" text-anchor="middle" font-size="13">Lumpur B3</text>
+        </a>
+
+        <!-- Titik uji -->
+        <a class="unit" href="#limbah-1" aria-label="Titik uji air olahan: karakteristik limbah">
+          <path class="ink" stroke-width="1.8" d="M905 194 V210"/>
+          <path class="vessel" d="M898 150 H912 V164 L924 190 H886 L898 164 Z"/>
+          <path class="liquid" d="M893 178 H917 L922 188 H888 Z"/>
+          <text class="lbl" x="905" y="128" text-anchor="middle" font-size="13">Uji BOD, COD, pH</text>
+        </a>
+      </svg>
+    </figure>
+    <div class="diagram-caption">
+      <span>Klik salah satu unit untuk membuka materinya.</span>
+      <span class="key"><i></i> aliran air</span>
+      <span class="key"><i class="sig"></i> sinyal kontrol</span>
+    </div>
   </div>
 </header>
 
 <main>
   <section id="pengumuman">
     <div class="wrap">
-      <h2>Pengumuman</h2>
-      <p class="sub">Informasi terbaru untuk kelas.</p>
-      <div class="notice">
-        <div class="date">22 November 2026</div>
-        <p>Selamat datang di ruang kelas online. Materi dan tugas akan diunggah di halaman ini.</p>
+      <div class="section-head"><h2>Pengumuman</h2></div>
+      <p class="intro">Informasi terbaru untuk kelas XI dan XII.</p>
+      <div class="notices">
+        <div class="notice">
+          <time datetime="2026-11-22">22 November 2026</time>
+          <p>Selamat datang di ruang kelas online. Materi dan tugas akan diunggah di halaman ini.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="limbah" class="subject limbah">
+  <section id="limbah">
     <div class="wrap">
-      <h2>Pengolahan Limbah <span class="badge">Kelas XII</span></h2>
-      <p class="sub">Karakteristik limbah industri dan cara pengolahannya.</p>
-      <div class="grid">
-        <article class="card">
-          <div class="no">Topik 1</div>
-          <h3>Karakteristik Limbah Industri</h3>
-          <p>Jenis limbah (cair, padat, gas), parameter BOD, COD, TSS, pH, dan baku mutu.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-        <article class="card">
-          <div class="no">Topik 2</div>
-          <h3>Pengolahan Secara Fisika</h3>
+      <div class="section-head"><h2>Pengolahan Limbah</h2><span class="grade">Kelas XII</span></div>
+      <p class="intro">Urutan materi mengikuti alur air limbah: kenali dulu sifatnya, lalu olah secara fisika, kimia, dan biologi, sampai menangani lumpur sisanya.</p>
+      <ol class="train">
+        <li id="limbah-1">
+          <div class="node">1</div>
+          <h3>Karakteristik limbah industri</h3>
+          <p>Jenis limbah, parameter BOD, COD, TSS, pH, dan baku mutu.</p>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+        <li id="limbah-2">
+          <div class="node">2</div>
+          <h3>Pengolahan fisika</h3>
           <p>Penyaringan, sedimentasi, flotasi, dan filtrasi.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-        <article class="card">
-          <div class="no">Topik 3</div>
-          <h3>Pengolahan Secara Kimia</h3>
-          <p>Netralisasi, koagulasi–flokulasi, dan presipitasi.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-        <article class="card">
-          <div class="no">Topik 4</div>
-          <h3>Pengolahan Secara Biologi</h3>
-          <p>Lumpur aktif, kolam stabilisasi, serta proses aerob dan anaerob.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-        <article class="card">
-          <div class="no">Topik 5</div>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+        <li id="limbah-3">
+          <div class="node">3</div>
+          <h3>Pengolahan kimia</h3>
+          <p>Netralisasi, koagulasi dan flokulasi, serta presipitasi.</p>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+        <li id="limbah-4">
+          <div class="node">4</div>
+          <h3>Pengolahan biologi</h3>
+          <p>Lumpur aktif, kolam stabilisasi, proses aerob dan anaerob.</p>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+        <li id="limbah-5">
+          <div class="node">5</div>
           <h3>Limbah B3</h3>
           <p>Identifikasi, penyimpanan, dan penanganan limbah bahan berbahaya dan beracun.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-      </div>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+      </ol>
     </div>
   </section>
 
-  <section id="kontrol" class="subject kontrol">
+  <section id="kontrol">
     <div class="wrap">
-      <h2>Kontrol Proses <span class="badge">Kelas XI</span></h2>
-      <p class="sub">Dasar sistem pengendalian pada industri kimia.</p>
-      <div class="grid">
-        <article class="card">
-          <div class="no">Topik 1</div>
-          <h3>Konsep Sistem Kontrol</h3>
-          <p>Variabel proses, set point, serta sistem loop terbuka dan loop tertutup.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-        <article class="card">
-          <div class="no">Topik 2</div>
-          <h3>Sensor dan Transmitter</h3>
+      <div class="section-head"><h2>Kontrol Proses</h2><span class="grade">Kelas XI</span></div>
+      <p class="intro">Urutan materi mengikuti jalannya sinyal dalam satu loop kontrol: dari konsep, ke sensor, ke katup, ke cara pengendali mengambil keputusan, sampai membaca diagramnya.</p>
+      <ol class="train sig">
+        <li id="kontrol-1">
+          <div class="node">1</div>
+          <h3>Konsep sistem kontrol</h3>
+          <p>Variabel proses, set point, loop terbuka dan loop tertutup.</p>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+        <li id="kontrol-2">
+          <div class="node">2</div>
+          <h3>Sensor dan transmitter</h3>
           <p>Pengukuran suhu, tekanan, laju alir, dan level.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-        <article class="card">
-          <div class="no">Topik 3</div>
-          <h3>Elemen Kendali Akhir</h3>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+        <li id="kontrol-3">
+          <div class="node">3</div>
+          <h3>Elemen kendali akhir</h3>
           <p>Control valve, aktuator, dan pompa.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-        <article class="card">
-          <div class="no">Topik 4</div>
-          <h3>Mode Kontrol P, PI, PID</h3>
-          <p>Aksi proporsional, integral, dan derivatif serta pengaruhnya terhadap respon.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-        <article class="card">
-          <div class="no">Topik 5</div>
-          <h3>Simbol dan Diagram P&amp;ID</h3>
-          <p>Membaca simbol instrumen dan diagram perpipaan.</p>
-          <div class="links"><span>Materi segera</span></div>
-        </article>
-      </div>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+        <li id="kontrol-4">
+          <div class="node">4</div>
+          <h3>Mode kontrol P, PI, PID</h3>
+          <p>Aksi proporsional, integral, dan derivatif serta pengaruhnya pada respon.</p>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+        <li id="kontrol-5">
+          <div class="node">5</div>
+          <h3>Simbol dan diagram P&amp;ID</h3>
+          <p>Membaca simbol instrumen seperti AT dan AIC pada diagram di atas.</p>
+          <div class="res"><span class="soon">Materi segera</span></div>
+        </li>
+      </ol>
     </div>
   </section>
 
   <section id="tugas">
     <div class="wrap">
-      <h2>Tugas</h2>
-      <p class="sub">Daftar tugas beserta batas waktunya.</p>
+      <div class="section-head"><h2>Tugas</h2></div>
+      <p class="intro">Daftar tugas beserta batas waktu dan tempat mengumpulkan.</p>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Kelas</th><th>Tugas</th><th>Batas waktu</th><th>Kumpulkan</th></tr></thead>
+          <thead><tr><th>Kelas</th><th>Tugas</th><th>Batas waktu</th><th>Kumpulkan di</th></tr></thead>
           <tbody>
-            <tr><td>XII</td><td>Belum ada tugas</td><td>–</td><td>–</td></tr>
-            <tr><td>XI</td><td>Belum ada tugas</td><td>–</td><td>–</td></tr>
+            <tr><td>XII</td><td class="empty">Belum ada tugas</td><td>–</td><td>–</td></tr>
+            <tr><td>XI</td><td class="empty">Belum ada tugas</td><td>–</td><td>–</td></tr>
           </tbody>
         </table>
       </div>
@@ -220,7 +384,7 @@
 </main>
 
 <footer>
-  <div class="wrap">Dibuat untuk pembelajaran Kurikulum Merdeka · Teknik Kimia Industri</div>
+  <div class="wrap">Ruang kelas Teknik Kimia Industri, Kurikulum Merdeka.</div>
 </footer>
 
 </body>

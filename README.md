@@ -5,7 +5,7 @@ Halaman kelas untuk Pengolahan Limbah (XII) dan Kontrol Proses (XI), diterbitkan
 ## Cara memperbarui
 
 - **Pengumuman**: salin satu blok `<div class="notice">` di `index.html`, lalu ubah tanggal dan isinya.
-- **Materi**: pada kartu topik, ganti `<span>Materi segera</span>` dengan tautan, misalnya
+- **Materi**: pada topik (`<li id="limbah-1">` dst.), ganti `<span class="soon">Materi segera</span>` dengan tautan, misalnya
   `<a href="materi/limbah-topik1.pdf">Materi PDF</a>`, lalu taruh file PDF-nya di folder `materi/`.
 - **Tugas**: tambahkan baris `<tr>` di tabel bagian Tugas.
 
